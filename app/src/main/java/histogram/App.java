@@ -1,14 +1,15 @@
 
 package histogram;
 
+import java.util.Scanner;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    private Scanner scanner;
+    public App(){
+        scanner = new Scanner(System.in);
     }
+    
 
     public static void main(String[] args) {
-        FileReader fileReader = new FileReader();
-        String filePath = "./file.txt";
-        fileReader.countCharacters(filePath);
     }
 }
