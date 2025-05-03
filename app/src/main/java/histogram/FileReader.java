@@ -32,7 +32,7 @@ public class FileReader {
         return result;
     }
 
-    // second task -> read a file and print its characters counting frequencies
+    // third task -> read a file and print its characters counting frequencies
     public void countCharacters(String readFile) {
         // read a file and print its characters counting frequencies
         try {
