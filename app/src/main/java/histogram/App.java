@@ -7,6 +7,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        FileReader fileReader = new FileReader();
+        String filePath = "./file.txt";
+        fileReader.countCharacters(filePath);
     }
 }
