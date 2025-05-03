@@ -9,6 +9,6 @@ public class App {
     public static void main(String[] args) {
         FileReader fileReader = new FileReader();
         String filePath = "./file.txt";
-        fileReader.printFileCharacters(filePath);
+        fileReader.countCharacters(filePath);
     }
 }

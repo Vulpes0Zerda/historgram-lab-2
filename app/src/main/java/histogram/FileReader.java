@@ -1,14 +1,15 @@
 package histogram;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class FileReader {
-    public BufferedReader fileReader;
-    public int nextCharacter;
     
+    // first task -> read a file and print its characters
     public void printFileCharacters(String filePath) {
         try {
             FileInputStream fileInputStream = new FileInputStream(filePath);
@@ -18,6 +19,49 @@ public class FileReader {
                 System.out.print((char) character);
             }
             inputStreamReader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    public String hashMapToString(HashMap<Character, Integer> map) {
+        String result = "";
+        for (Character key : map.keySet()) {
+            result += key + ": " + map.get(key) + "\n";
+        }
+        return result;
+    }
+
+    // second task -> read a file and print its characters counting frequencies
+    public void countCharacters(String readFile) {
+        // read a file and print its characters counting frequencies
+        try {
+            FileInputStream fileInputStream = new FileInputStream(readFile);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            int character;
+            HashMap<Character, Integer> charCountMap = new HashMap<>();
+            while ((character = inputStreamReader.read()) != -1) {
+                char c = (char) character;
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                    Integer existingCount = charCountMap.get(c);
+                    if (existingCount == null) {
+                        existingCount = 0;
+                    }
+                    charCountMap.put(c, existingCount + 1);
+                }
+
+            }
+            inputStreamReader.close();
+
+            // write the frequencies to a file
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("frequencies.txt"));
+                writer.write(hashMapToString(charCountMap));
+                writer.close();
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
+
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
