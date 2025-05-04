@@ -17,18 +17,18 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation libs.junit.jupiter
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // This dependency is used by the application.
-    implementation libs.guava
+    implementation 'com.google.guava:guava:32.1.2-jre'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -40,4 +40,10 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+
+    // Enable test logging to display output
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED', 'STANDARD_OUT', 'STANDARD_ERROR'
+        showStandardStreams = true
+    }
 }
