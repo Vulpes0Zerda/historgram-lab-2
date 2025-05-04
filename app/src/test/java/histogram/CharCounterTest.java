@@ -1,14 +1,14 @@
 package histogram;
 
-import histogram.fileIO.FileReader;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import histogram.fileIO.FileReader;
 
 // sudo bash ./gradlew clean build
 public class CharCounterTest {
@@ -30,7 +30,7 @@ public class CharCounterTest {
         FileReader fileReader = new FileReader(filePath);
         fileReader.getCharacterStream().forEach(line -> {
             for (char c : line.toCharArray()) {
-                characterCounter.countCharacter(c);
+                characterCounter.add(c);
             }
         });
 
