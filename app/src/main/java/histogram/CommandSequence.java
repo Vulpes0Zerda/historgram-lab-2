@@ -20,20 +20,19 @@ public class CommandSequence {
     scanner = new Scanner(System.in);
   }
 
+  // instructions to run from start to finish
   public void start(){
-    readFile();
-    counter = new CharacterCounter();
-
-    writeFile();
-    System.out.println("Writeing successful. Exiting Programm.");
+    this.readFile();
+    this.countCharacters();
+    this.writeFile(counter.getCountString());
+    System.out.println("Writing successful. Exiting Programm.");
     System.out.println("Have a nice day.");
   }
 
 
   public void readFile () {
-
+    // repeats as long as the user doesn't input a valid path and file name or quits the programm
     while ( !fileRead ) {
-
       System.out.println("Please input the file path and name (type quit, q or /q to close the programm):");
       String input = scanner.nextLine();
 
@@ -46,8 +45,7 @@ public class CommandSequence {
         case "q":
         case "/q":
 
-          System.out.println("Programm aborted. Till next time <3");
-          System.exit(0);
+          this.quit();
           break;
 
         default:
@@ -78,24 +76,14 @@ public class CommandSequence {
   }
 
 
-  public void sleepForTime(int ms) throws Exception{
-    try{
 
-      Thread.sleep(ms);
-
-    } catch (Exception eThread){
-
-      System.err.println("Somehow the idle thread was interrupted. We don't know how that happend.");
-      System.err.println("Error: " + eThread);
-      throw eThread;
-
-    }
-  }
 
 
   public void countCharacters(){
     int waitingCycles = 10;
     int sleepTime = 500;
+
+    this.counter = new CharacterCounter();
     for(int i=0; i < waitingCycles; i++){
         
       try{
@@ -104,11 +92,13 @@ public class CommandSequence {
         
           reader.getCharacterStream().forEach(
             (e)->{
-              char c = e.charAt(0);
-              counter.countCharacter(c);
+              for(char c: e.toCharArray())
+                counter.add(c);
             }
           );
+          break;
           
+        // waits and tests again, important for large files
         }else if(i < waitingCycles-1){
         
           this.sleepForTime(sleepTime);
@@ -137,11 +127,12 @@ public class CommandSequence {
   }
 
 
-  public void writeFile(){
+  public void writeFile(String msg){
 
     while ( !fileWritten ) {
 
       System.out.println("Please write the path and name of the file you want the histogramm to be written to:");
+      
       String input = scanner.nextLine();
 
       switch (input) {
@@ -150,8 +141,7 @@ public class CommandSequence {
         case "q":
         case "/q":
 
-          System.out.println("Programm aborted. Till next time <3");
-          System.exit(0);
+          this.quit();
           break;
 
         default:
@@ -164,6 +154,10 @@ public class CommandSequence {
           try{
           
               writer = new FileWriter(input);
+              writer.writeToFile(counter.getTopCountString());
+              writer.writeToFile(counter.getCountString());
+              writer.writeToFile(counter.getHistogrammString());
+              writer.execute();
               fileWritten = !fileWritten;
 
           }catch(IOException e){
@@ -173,6 +167,26 @@ public class CommandSequence {
 
           }
       }
+    }
+  }
+
+
+  public void quit(){
+    System.out.println("Programm aborted. Till next time.");
+    System.exit(0);
+  }
+
+  public void sleepForTime(int ms) throws Exception{
+    try{
+
+      Thread.sleep(ms);
+
+    } catch (Exception eThread){
+
+      System.err.println("Somehow the idle thread was interrupted. We don't know how that happend.");
+      System.err.println("Error: " + eThread);
+      throw eThread;
+
     }
   }
 }
