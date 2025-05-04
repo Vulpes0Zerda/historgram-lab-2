@@ -45,6 +45,7 @@ public class CharacterCounter {
     }
   }
 
+  
 
   public String getTopCountString(){
 

@@ -26,7 +26,7 @@ public class CharCounterTest {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("Hello World!");
         }
-
+        
         FileReader fileReader = new FileReader(filePath);
         fileReader.getCharacterStream().forEach(line -> {
             for (char c : line.toCharArray()) {
@@ -34,12 +34,12 @@ public class CharCounterTest {
             }
         });
 
-        assertEquals(1, characterCounter.charCount.get('H'));
-        assertEquals(3, characterCounter.charCount.get('l'));
-        assertEquals(2, characterCounter.charCount.get('o'));
-        assertEquals(1, characterCounter.charCount.get('W'));
-        assertEquals(1, characterCounter.charCount.get('r'));
-        assertEquals(1, characterCounter.charCount.get('d'));
-        assertEquals(1, characterCounter.charCount.get('e'));
+        assertEquals(1, (int) characterCounter.charCount.get('H'));
+        assertEquals(3, (int) characterCounter.charCount.get('l'));
+        assertEquals(2, (int) characterCounter.charCount.get('o'));
+        assertEquals(1, (int) characterCounter.charCount.get('W'));
+        assertEquals(1, (int) characterCounter.charCount.get('r'));
+        assertEquals(1, (int) characterCounter.charCount.get('d'));
+        assertEquals(1, (int) characterCounter.charCount.get('e'));
     }
 }
